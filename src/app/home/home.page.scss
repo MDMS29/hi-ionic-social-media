@@ -1,13 +1,9 @@
-swiper-container {
-    width: 100%;
-    height: 100%;
+.user-avatar {
+  width: 30px;
+  height: 30px;
 }
-swiper-slide {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.title1 {
-  color: red;
+
+.image-post {
+  margin: 0 auto;
+  display: block;
 }

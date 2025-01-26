@@ -12,6 +12,10 @@
     <ion-item>
       <ion-input label="Email" labelPlacement="floating" placeholder="example@email.com" formControlName="email"></ion-input>
     </ion-item>
+    
+    <ion-item>
+      <ion-input label="Password" labelPlacement="floating" placeholder="" formControlName="password"></ion-input>
+    </ion-item>
     <div>
       <ng-container *ngFor="let error of formErrors.email">
         <ion-label color="danger"

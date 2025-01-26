@@ -18,7 +18,7 @@ export class IntroPage implements OnInit {
 
   async finish() {
     await this.storage.set('viLaIntro', true);
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl('/menu/home');
   }
 
 }
