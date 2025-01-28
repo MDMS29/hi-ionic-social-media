@@ -3,15 +3,47 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <ion-title>{{ user_data.name }}'s Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-title>{{user_data.name}} {{user_data.last_name}}</ion-title>
-  <ion-avatar (click)="takePhoto()">
-    <img [src]="user_data.image ? user_data.image : 'assets/images/default-avatar.jpeg'" />
-  </ion-avatar>
-  <p>usuario: {{user_data.username}}</p>
-  <p>Seguidores: {{user_data.followed_users.length}}</p>
-  <p>Siguiendo: {{user_data.following_users.length}}</p>
+  <!-- Encabezado del perfil -->
+  <div class="profile-header">
+    <div class="avatar" (click)="takePhoto()">
+      <img
+        [src]="user_data.image ? user_data.image : 'assets/images/default-avatar.jpeg'"
+        alt="User Avatar"
+      />
+    </div>
+    <div class="profile-info">
+      <h2>{{ user_data.name }} {{ user_data.last_name }}</h2>
+      <p class="username"> {{ user_data.username }}</p>
+    </div>
+  </div>
+
+  <div class="profile-stats">
+    <div>
+      <h3>{{ user_data.posts?.length ?? 0 }}</h3>
+      <p>Publicaciones</p>
+    </div>
+    <div>
+      <h3>{{ user_data.followed_users?.length ?? 0 }}</h3>
+      <p>Seguidores</p>
+    </div>
+    <div>
+      <h3>{{ user_data.following_users?.length ?? 0}}</h3>
+      <p>Siguiendo</p>
+    </div>
+  </div>
+
+  <div class="action-button">
+    <ion-button expand="block" fill="outline">Editar perfil</ion-button>
+  </div>
+
+  <div class="post-grid">
+    <div *ngFor="let post of user_data.posts" class="post-item">
+      <img [src]="post.image" alt="Post Image" />
+    </div>
+  </div>
 </ion-content>

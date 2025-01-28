@@ -12,8 +12,16 @@
     flex-direction: column;
     justify-content: center;
 
+    & .title {
+        font-size: 2rem;
+        text-transform: uppercase;
+        text-align: center;
+        font-weight: bold;
+    }
+
     & figure {
         display: flex;
+        flex-direction: column;
         justify-content: center;
 
         &>img {
@@ -33,7 +41,7 @@ form {
 }
 
 @media (min-width: 1280px) {
-    .login-container{
+    .login-container {
         width: 40%;
     }
 }

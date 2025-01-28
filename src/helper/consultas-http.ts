@@ -15,7 +15,7 @@ export class PeticionesHttp {
                     accept(data);
                 },
                 (error) => {
-                    accept(error);
+                    reject(error);
                 }
             )
         });

@@ -2,12 +2,13 @@
   <div class="main-content">
     <section class="login-container">
       <figure>
-        <img alt="Silhouette of a person's head" src="assets/img/logo-app.png" />
+        <img alt="logo app" src="assets/img/logo-app.png" />
+        <h1 class="title">Iniciar Sesión</h1>
       </figure>
       <form [formGroup]="loginForm" (ngSubmit)="loginUser(loginForm.value)">
 
         <ion-item>
-          <ion-input label="Email" labelPlacement="floating" placeholder="example@email.com"
+          <ion-input label="Correo" labelPlacement="floating" placeholder="example@email.com"
             formControlName="email"></ion-input>
         </ion-item>
         <div>
@@ -20,8 +21,8 @@
         </div>
 
         <ion-item>
-          <ion-input label="Password" labelPlacement="floating" placeholder="***"
-            formControlName="password"></ion-input>
+          <ion-input label="Clave" labelPlacement="floating" placeholder="***"
+            formControlName="password" type="password"></ion-input>
         </ion-item>
         <ng-container *ngFor="let error of formErrors.password">
           <div>
@@ -33,7 +34,7 @@
         </ng-container>
         <ion-label color="danger">{{ errorMessage }}</ion-label>
 
-        <ion-button type="submit">Ingresar</ion-button>
+        <ion-button type="submit" [disabled]="!loginForm.valid">Ingresar</ion-button>
 
         <div>
           <p>¿No tienes cuenta? <a routerLink="/register">Regístrate</a></p>

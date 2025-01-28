@@ -32,41 +32,36 @@ export class AuthService {
       this.storage.set('user', response.user);
       this.storage.set('isUserLoggedIn', true);
       this.router.navigateByUrl('/menu/home');
-      
+
       return ''
-    }else{
+    } else {
       return response.error ? 'Usuario o contraseña incorrectos' : 'Ha ocurrido un error intentelo mas tarde';
     }
   }
 
-  register(data: any) {
-    return new Promise((accept, reject) => {
-      let params = {
-        user: {
-          email: data.email,
-          password: data.password,
-          password_confirmation: data.password_confirmation,
-          name: data.name,
-          last_name: data.last_name,
-          username: data.username
-        }
+  async register(data: any) {
+    let params = {
+      user: {
+        name: data.name,
+        last_name: data.last_name,
+        username: data.username,
+        email: data.email,
+        password: data.password,
+        password_confirmation: data.password_confirmation,
       }
-      this.http.post(`${this.urlServer}/signup`, params, this.httpHeaders).subscribe(
-        (data: any) => {
-          if (data.status == 'OK') {
-            accept(data);
-          } else {
-            reject(data.errors);
-          }
-        },
-        (error) => {
-          if (error.status >= 400 && error.status <= 499) {
-            reject(error.error.errors);
-          } else if (error.status > 499) {
-            reject('INTERNAL SERVER ERROR');
-          }
-        }
-      )
-    });
+    }
+
+    try {
+      const response = await this.PeticionesHttp.post('signup', params)
+      if (response.status == 'OK') {
+        return { success: true, msg: response.msg }
+      } else {
+        return { successs: false, msg: response.error.errors }
+      }
+
+    } catch (error: any) {
+      console.log("🚀 ~ AuthService ~ //returnnewPromise ~ error:", error)
+      return { success: false, msg: error.error.errors }
+    }
   }
 }

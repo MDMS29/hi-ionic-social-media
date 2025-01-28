@@ -1,8 +1,13 @@
 <ion-split-pane>
   <ion-menu contentId="content" side="start">
+
     <ion-header>
       <ion-toolbar>
-        <ion-title>Menu</ion-title>
+        <ion-title>
+          <a routerLink="/menu/home">
+            <img src="assets/img/logo-app.png" alt="logo app" width="50" />
+          </a>
+        </ion-title>
         <ion-buttons slot="end">
           <ion-button (click)="closeMenu()">
             <ion-icon name="arrow-back-outline"></ion-icon>
@@ -10,6 +15,14 @@
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
+
+    <div *ngFor="let item of menuItems">
+      <ion-item [routerLink]="[item.url]" routerDirection="root" (click)="[item.function()]">
+        <ion-icon slot="start" [name]="item.icon"></ion-icon>
+        <ion-label>{{ item.title }}</ion-label>
+      </ion-item>
+    </div>
+
     <ion-content>
       <ion-item (click)="log_out()">
         <ion-icon name="log-out-outline"></ion-icon> Salir

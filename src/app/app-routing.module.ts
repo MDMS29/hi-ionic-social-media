@@ -5,7 +5,7 @@ import { LoginGuard } from './guard/login.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'menu/home',
+    redirectTo: '/menu/home',
     pathMatch: 'full'
   },
   {
@@ -23,7 +23,8 @@ const routes: Routes = [
   {
     path: 'menu',
     loadChildren: () => import('./menu/menu.module').then(m => m.MenuPageModule), canActivate: [LoginGuard]
-  },  {
+  },
+  {
     path: 'account',
     loadChildren: () => import('./account/account.module').then( m => m.AccountPageModule)
   },
