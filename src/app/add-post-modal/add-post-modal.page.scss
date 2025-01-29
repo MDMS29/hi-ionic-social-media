@@ -1,0 +1,49 @@
+.post-image-container {
+    position: relative;
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  
+    img {
+      width: 100%;
+      border-radius: 12px;
+    }
+  
+    .camera-icon {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      font-size: 24px;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 8px;
+      border-radius: 50%;
+    }
+  
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+  
+  .input-container {
+    --background: transparent;
+    --border-radius: 8px;
+    margin-bottom: 12px;
+  }
+  
+  .char-count {
+    font-size: 14px;
+    text-align: right;
+    margin-right: 16px;
+  }
+  
+  .form-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  

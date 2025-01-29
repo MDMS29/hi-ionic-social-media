@@ -31,7 +31,16 @@ const routes: Routes = [
   {
     path: 'add-post-modal',
     loadChildren: () => import('./add-post-modal/add-post-modal.module').then( m => m.AddPostModalPageModule)
+  },
+  {
+    path: 'search-users',
+    loadChildren: () => import('./search-users/search-users.module').then( m => m.SearchUsersPageModule)
+  },  {
+    path: 'update-account-modal',
+    loadChildren: () => import('./update-account-modal/update-account-modal.module').then( m => m.UpdateAccountModalPageModule)
   }
+
+
 
 ];
 

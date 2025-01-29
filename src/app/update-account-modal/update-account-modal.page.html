@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Editar Perfil</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form [formGroup]="accountForm" (ngSubmit)="updateAccount(accountForm.value)">
+
+    <!-- <div class="profile-avatar-container">
+      <ion-avatar class="profile-avatar">
+        <img [src]="userData.image ? userData.image : 'assets/img/default-avatar.jpeg'" />
+      </ion-avatar>
+      <ion-button fill="outline" size="small" (click)="changeProfilePhoto()">
+        Cambiar Foto
+      </ion-button>
+    </div> -->
+
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input formControlName="name"></ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="accountForm.get('name')?.invalid && accountForm.get('name')?.dirty">
+        {{ getErrorMessage('name') }}
+      </ion-text>
+
+      <ion-item>
+        <ion-label position="floating">Apellido</ion-label>
+        <ion-input formControlName="last_name"></ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="accountForm.get('last_name')?.invalid && accountForm.get('last_name')?.dirty">
+        {{ getErrorMessage('last_name') }}
+      </ion-text>
+
+      <ion-item>
+        <ion-label position="floating">Usuario</ion-label>
+        <ion-input formControlName="username"></ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="accountForm.get('username')?.invalid && accountForm.get('username')?.dirty">
+        {{ getErrorMessage('username') }}
+      </ion-text>
+
+      <ion-item>
+        <ion-label position="floating">Correo Electrónico</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="accountForm.get('email')?.invalid && accountForm.get('email')?.dirty">
+        {{ getErrorMessage('email') }}
+      </ion-text>
+    </ion-list>
+
+    <div class="form-buttons">
+      <ion-button type="submit" expand="full" [disabled]="accountForm.invalid">
+        Guardar Cambios
+      </ion-button>
+    </div>
+
+  </form>
+
+</ion-content>

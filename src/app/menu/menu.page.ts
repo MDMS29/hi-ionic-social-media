@@ -14,8 +14,12 @@ export class MenuPage implements OnInit {
     {
       title: 'Perfil',
       url: '/menu/account',
-      icon: 'person-outline',
-      function: this.log_out
+      icon: 'person-outline'
+    },
+    {
+      title: 'Usuarios',
+      url: '/menu/search-users',
+      icon: 'people-outline'
     }
   ]
 
@@ -25,8 +29,7 @@ export class MenuPage implements OnInit {
     private storage: Storage
   ) { }
 
-  async ngOnInit() {
-    await this.storage.create();
+  ngOnInit() {
   }
 
   closeMenu() {

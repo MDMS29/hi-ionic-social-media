@@ -3,6 +3,9 @@ import { UserService } from '../service/user.service';
 import { Storage } from '@ionic/storage-angular';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
+import { ModalController } from '@ionic/angular';
+import { UpdateAccountModalPage } from '../update-account-modal/update-account-modal.page';
+
 defineCustomElements(window);
 @Component({
   selector: 'app-account',
@@ -10,6 +13,7 @@ defineCustomElements(window);
   styleUrls: ['./account.page.scss'],
   standalone: false
 })
+
 export class AccountPage implements OnInit {
   user_data: any = {
     name: '',
@@ -18,7 +22,12 @@ export class AccountPage implements OnInit {
     followed_users: [],
     following_users: []
   };
-  constructor(private userService: UserService, private storage: Storage) { }
+
+  constructor(
+    private userService: UserService,
+    private storage: Storage,
+    private modalController: ModalController
+  ) { }
 
   async ngOnInit() {
     let user: any = await this.storage.get('user');
@@ -47,6 +56,14 @@ export class AccountPage implements OnInit {
     }).catch((error: any) => {
       console.log(error);
     });
+  }
+
+  async openModalUpdate() {
+    const modal = await this.modalController.create({
+      component: UpdateAccountModalPage,
+      componentProps: {}
+    });
+    return await modal.present();
   }
 
 }
