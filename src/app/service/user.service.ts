@@ -28,7 +28,7 @@ export class UserService {
   }
 
   updateUser(user: any) {
-    
+
     const user_params = { user: user }
 
     return new Promise((accept, reject) => {
@@ -46,8 +46,42 @@ export class UserService {
     });
   }
 
-  listUsers(page: number, perPage: number, query: string = ''){
+  listUsers(page: number, perPage: number, query: string = '') {
     const url = `${this.urlServer}/list_users?page=${page}&per_page=${perPage}&query=${query}`;
     return this.http.get(url).toPromise();
+  }
+
+  followUser(user_id: any, followee_id: any) {
+    const follow_params = { followee_id: followee_id }
+    return new Promise((accept, reject) => {
+      this.http.post(`${this.urlServer}/follow/${user_id}`, follow_params, this.httpHeaders).subscribe((data: any) => {
+        accept(data);
+      },
+        (error) => {
+          if (error.status > 499) {
+            reject('INTERNAL SERVER ERROR');
+          } else {
+            reject('Error al actualizar el usuario');
+          }
+        }
+      )
+    });
+  }
+
+  unfollowUser(user_id: any, followee_id: any) {
+    const follow_params = { followee_id: followee_id }
+    return new Promise((accept, reject) => {
+      this.http.post(`${this.urlServer}/unfollow/${user_id}`, follow_params, this.httpHeaders).subscribe((data: any) => {
+        accept(data);
+      },
+        (error) => {
+          if (error.status > 499) {
+            reject('INTERNAL SERVER ERROR');
+          } else {
+            reject('Error al actualizar el usuario');
+          }
+        }
+      )
+    });
   }
 }

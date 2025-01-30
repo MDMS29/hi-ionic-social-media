@@ -9,6 +9,7 @@
 <ion-content>
   <!-- Lista de publicaciones -->
   <ion-list class="post-list">
+    <ion-progress-bar type="indeterminate" *ngIf="isLoading"></ion-progress-bar>
     <ion-card *ngFor="let post of posts" class="post-card">
       <!-- Imagen del post -->
       <img src="{{ post.image }}" class="image-post" />
@@ -17,7 +18,7 @@
       <ion-card-header>
         <ion-card-subtitle class="user-creator">
           <ion-avatar class="user-avatar">
-            <img [src]="post.user.image ? post.user.image : 'assets/img/user-default.jpeg'" alt="User Avatar" />
+            <img [src]="post.user.image ? post.user.image : 'assets/img/user-default.png'" alt="User Avatar" />
           </ion-avatar>
           {{ post.user.name }}
         </ion-card-subtitle>
@@ -25,7 +26,7 @@
 
       <!-- Contenido del post -->
       <ion-card-content class="post-content">
-        {{ truncateText(post.description, 100) }}
+        {{ truncateText(post.description, 200) }}
       </ion-card-content>
 
       <!-- Botón de likes -->

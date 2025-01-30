@@ -10,7 +10,7 @@
 <ion-content>
   <!-- Encabezado del perfil -->
   <div class="profile-header">
-    <div class="avatar" (click)="takePhoto()">
+    <div class="avatar" (click)="presentPhotoOptions()">
       <img
         [src]="user_data.image ? user_data.image : 'assets/img/user-default.png'"
         alt="User Avatar"
@@ -28,11 +28,11 @@
       <p>Publicaciones</p>
     </div>
     <div>
-      <h3>{{ user_data.followed_users?.length ?? 0 }}</h3>
+      <h3>{{ user_data.followers?.length ?? 0 }}</h3>
       <p>Seguidores</p>
     </div>
     <div>
-      <h3>{{ user_data.following_users?.length ?? 0}}</h3>
+      <h3>{{ user_data.followees?.length ?? 0}}</h3>
       <p>Siguiendo</p>
     </div>
   </div>

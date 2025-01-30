@@ -3,7 +3,7 @@ import { UserService } from '../service/user.service';
 import { Storage } from '@ionic/storage-angular';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { UpdateAccountModalPage } from '../update-account-modal/update-account-modal.page';
 
 defineCustomElements(window);
@@ -19,14 +19,15 @@ export class AccountPage implements OnInit {
     name: '',
     email: '',
     image: '',
-    followed_users: [],
-    following_users: []
+    followees: [],
+    followers: []
   };
 
   constructor(
     private userService: UserService,
     private storage: Storage,
-    private modalController: ModalController
+    private modalController: ModalController,
+    public alertController: AlertController
   ) { }
 
   async ngOnInit() {
@@ -40,14 +41,44 @@ export class AccountPage implements OnInit {
     });
   }
 
-  async takePhoto() {
+  async takePhoto(source: CameraSource) {
+    console.log('Take Photo');
     const capturedPhoto = await Camera.getPhoto({
       resultType: CameraResultType.DataUrl,
-      source: CameraSource.Camera,
+      source: source,
       quality: 100
     });
     this.user_data.image = capturedPhoto.dataUrl;
     this.update();
+  }
+
+  async presentPhotoOptions() {
+    const alert = await this.alertController.create({
+      header: "Seleccione una opción",
+      message: "¿De dónde desea obtener la imagen?",
+      buttons: [
+        {
+          text: "Cámara",
+          handler: () => {
+            this.takePhoto(CameraSource.Camera);
+          }
+        },
+        {
+          text: "Galería",
+          handler: () => {
+            this.takePhoto(CameraSource.Photos);
+          }
+        },
+        {
+          text: "Cancelar",
+          role: "cancel",
+          handler: () => {
+            console.log('Cancelado');
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   async update() {
