@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../service/user.service';
 import { Storage } from '@ionic/storage-angular';
+import { ToastController } from '@ionic/angular';
+import { AlertTypes } from 'src/helper/constanst';
 
 @Component({
   selector: 'app-search-users',
@@ -19,7 +21,8 @@ export class SearchUsersPage implements OnInit {
 
   constructor(
     private userService: UserService,
-    private storage: Storage
+    private storage: Storage,
+    private toast: ToastController,
   ) { }
   ngOnInit() {
     this.loadUsers();
@@ -59,37 +62,58 @@ export class SearchUsersPage implements OnInit {
 
   follow(followee_id: any) {
     const user_id = this.current_user.id;
-    this.userService.followUser(user_id, followee_id).then(() => {
-      this.users = this.users.map((user: any) => {
-        if (user.id == followee_id) {
-          return { ...user, is_following: true }
-        }
+    this.userService.followUser(user_id, followee_id).then((data: any) => {
 
-        return user;
-      });
+      if (data.msg) {
+        this.showToast(`${data.msg} 🎉`, 'primary');
+
+        this.users = this.users.map((user: any) => {
+          if (user.id == followee_id) {
+            return { ...user, is_following: true }
+          }
+
+          return user;
+        });
+      }
     }).catch((error: any) => {
       console.log(error);
     });
   }
   unfollow(unfollowee_id: any) {
     const user_id = this.current_user.id;
-    this.userService.unfollowUser(user_id, unfollowee_id).then(() => {
-      this.users = this.users.map((user: any) => {
-        if (user.id == unfollowee_id) {
-          return { ...user, is_following: false }
-        }
+    this.userService.unfollowUser(user_id, unfollowee_id).then((data: any) => {
+      if (data.msg) {
+        this.showToast(`${data.msg} 🎉`, 'primary');
 
-        return user;
-      });
+        this.users = this.users.map((user: any) => {
+          if (user.id == unfollowee_id) {
+            return { ...user, is_following: false }
+          }
+
+          return user;
+        });
+      }
     }).catch((error: any) => {
       console.log(error);
     });
   }
+
+
   toggleFollow(user: any) {
     if (user.is_following) {
       this.unfollow(user.id);
     } else {
       this.follow(user.id);
     }
+  }
+
+  async showToast(message: string, type: AlertTypes) {
+    const toast = await this.toast.create({
+      message,
+      duration: 2000,
+      position: 'top',
+      color: type
+    });
+    toast.present();
   }
 }
