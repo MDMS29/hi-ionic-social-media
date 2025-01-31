@@ -1,5 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 
+
+
 export class PeticionesHttp {
     private urlServer = 'http://51.79.26.171';
     private httpHeaders = { headers: new HttpHeaders({ "Content-Type": "application/json" }) };
