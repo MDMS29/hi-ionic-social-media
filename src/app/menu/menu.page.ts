@@ -10,26 +10,14 @@ import { Storage } from '@ionic/storage-angular';
 })
 export class MenuPage implements OnInit {
 
-  menuItems: any = [
-    {
-      title: 'Perfil',
-      url: '/menu/account',
-      icon: 'person-outline'
-    },
-    {
-      title: 'Usuarios',
-      url: '/menu/search-users',
-      icon: 'people-outline'
-    }
-  ]
-
   constructor(
     private menu: MenuController,
     private navCtrl: NavController,
     private storage: Storage
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.storage.create();
   }
 
   closeMenu() {
@@ -37,7 +25,6 @@ export class MenuPage implements OnInit {
   }
 
   log_out() {
-    this.storage.remove("user");
     this.storage.remove("isUserLoggedIn");
     this.navCtrl.navigateRoot("/login");
   }

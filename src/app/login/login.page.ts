@@ -3,7 +3,6 @@ import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from '../service/auth.service';
 import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
-import { formValidator } from 'src/helper/form.validator';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -14,14 +13,10 @@ import { formValidator } from 'src/helper/form.validator';
 export class LoginPage implements OnInit {
   loginForm: FormGroup;
   errorMessage: any;
-  formErrors: any = {
+  formErrors = {
     email: [
       { type: 'required', message: 'El correo es obligatorio' },
       { type: 'email', message: 'El correo no es valido' }
-    ],
-    password: [
-      { type: 'required', message: 'La contraseña es obligatoria' },
-      { type: 'minlength', message: 'La contraseña debe tener al menos 5 caracteres' }
     ]
   }
   constructor(
@@ -30,45 +25,31 @@ export class LoginPage implements OnInit {
     private navCtrl: NavController,
     private storage: Storage
   ) {
-    this.loginForm = new FormGroup({
+    this.loginForm = this.formBuilder.group({
       email: new FormControl('', Validators.compose([
         Validators.required,
         Validators.email
       ])),
       password: new FormControl('', Validators.compose([
-        Validators.minLength(5),
+        Validators.minLength(6),
         Validators.required
       ]))
     })
   }
 
-  private cambiandoEstadoForm() {
-    Object.keys(this.loginForm.controls).forEach((controlName) => {
-      const control = this.loginForm.get(controlName);
-      if (control) {
-        control.valueChanges.subscribe(() => {
-          this.errorMessage = '';
-        });
-      }
-    });
-  }
-
   async ngOnInit() {
-    this.cambiandoEstadoForm();
+    await this.storage.create();
   }
 
   loginUser(credentials: any) {
-    this.errorMessage = formValidator(this.loginForm, this.formErrors);
-
-    if (this.errorMessage) {
-      return;
-    }
-
     this.authService.login(credentials).then((res: any) => {
-      this.errorMessage = res;
+      this.errorMessage = '';
+      this.storage.set('user', res.user);
+      this.storage.set('isUserLoggedIn', true);
+      this.navCtrl.navigateForward('/home');
     }).catch((err: any) => {
       console.log("LOGIN ERROR:\n", err, "\nFIN LOGIN ERROR")
-      this.errorMessage = 'Ha ocurrido un error intentelo mas tarde';
+      this.errorMessage = err;
     });
   }
 
