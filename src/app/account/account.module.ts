@@ -13,7 +13,7 @@ import { AccountPage } from './account.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    AccountPageRoutingModule,
+    AccountPageRoutingModule
   ],
   declarations: [AccountPage]
 })

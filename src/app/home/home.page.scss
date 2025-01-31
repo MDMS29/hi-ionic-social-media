@@ -1,44 +1,38 @@
-.post-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-  place-items: center;
-  gap: 4px;
-  padding: 4px;
+.user-avatar {
+  width: 30px;
+  height: 30px;
+}
 
+.image-post {
+  margin: 0 auto;
+  display: block;
+  height: 200px;
+  width: 300px;
+}
+
+ion-fab {
+  ion-fab-button {
+    --background: #f4f4f4;
+    --color: red;
+  }
+}
+
+.post-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
 }
 
 .post-card {
-  margin-bottom: 16px;
+  width: 400px;
   background-color: white;
-  max-width: 400px;
-  border-radius: 12px;
+  color: black;
+  padding: 10px;
+}
 
-  .image-post {
-    width: 400px;
-    height: 250px;
-  }
-
-  .user-creator {
-    display: flex;
-    align-items: center;
-
-    .user-avatar {
-      width: 40px;
-      height: 30px;
-      margin-right: 8px;
-    }
-  }
-
-  .post-content {
-    font-size: 14px;
-    color: #666;
-    margin-top: 8px;
-  }
-
-  .like-button {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #e63946;
-  }
+.user-creator {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-weight: 700;
 }
