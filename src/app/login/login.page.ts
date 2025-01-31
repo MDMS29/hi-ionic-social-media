@@ -3,6 +3,7 @@ import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from '../service/auth.service';
 import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
+import { formValidator } from 'src/helper/form.validator';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -13,10 +14,14 @@ import { Storage } from '@ionic/storage-angular';
 export class LoginPage implements OnInit {
   loginForm: FormGroup;
   errorMessage: any;
-  formErrors = {
+  formErrors: any = {
     email: [
       { type: 'required', message: 'El correo es obligatorio' },
       { type: 'email', message: 'El correo no es valido' }
+    ],
+    password: [
+      { type: 'required', message: 'La contraseña es obligatoria' },
+      { type: 'minlength', message: 'La contraseña debe tener al menos 5 caracteres' }
     ]
   }
   constructor(
@@ -25,31 +30,45 @@ export class LoginPage implements OnInit {
     private navCtrl: NavController,
     private storage: Storage
   ) {
-    this.loginForm = this.formBuilder.group({
+    this.loginForm = new FormGroup({
       email: new FormControl('', Validators.compose([
         Validators.required,
         Validators.email
       ])),
       password: new FormControl('', Validators.compose([
-        Validators.minLength(6),
+        Validators.minLength(5),
         Validators.required
       ]))
     })
   }
 
+  private cambiandoEstadoForm() {
+    Object.keys(this.loginForm.controls).forEach((controlName) => {
+      const control = this.loginForm.get(controlName);
+      if (control) {
+        control.valueChanges.subscribe(() => {
+          this.errorMessage = '';
+        });
+      }
+    });
+  }
+
   async ngOnInit() {
-    await this.storage.create();
+    this.cambiandoEstadoForm();
   }
 
   loginUser(credentials: any) {
+    this.errorMessage = formValidator(this.loginForm, this.formErrors);
+
+    if (this.errorMessage) {
+      return;
+    }
+
     this.authService.login(credentials).then((res: any) => {
-      this.errorMessage = '';
-      this.storage.set('user', res.user);
-      this.storage.set('isUserLoggedIn', true);
-      this.navCtrl.navigateForward('/home');
+      this.errorMessage = res;
     }).catch((err: any) => {
       console.log("LOGIN ERROR:\n", err, "\nFIN LOGIN ERROR")
-      this.errorMessage = err;
+      this.errorMessage = 'Ha ocurrido un error intentelo mas tarde';
     });
   }
 
