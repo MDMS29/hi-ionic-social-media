@@ -14,7 +14,7 @@
   <form [formGroup]="addPostForm" (ngSubmit)="addPost()">
 
     <!-- Imagen del Post -->
-    <div class="post-image-container" (click)="uploadPhoto()">
+    <div class="post-image-container" (click)="presentPhotoOptions()">
       <img [src]="post_image ? post_image : 'assets/img/img-default.png'" />
       <ion-icon name="camera" class="camera-icon"></ion-icon>
     </div>

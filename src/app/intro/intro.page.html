@@ -1,22 +1,23 @@
-<ion-content>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Bienvenido</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
   <swiper-container slides-per-view="1" pagination="true">
-    <swiper-slide class="slide-1">
-      <h1 class="title1">Slide 1</h1>
-      <img src="/assets/img/chill-guy.png">
-      <ion-icon name="cafe-outline"></ion-icon>
-      <p>Chill Guy</p>
+
+    <swiper-slide class="slide">
+      <h2>Bienvenido a</h2>
+      <img src="/assets/img/logo-app.png" class="slide-img" />
+      <p>Conéctate con personas de todo el mundo</p>
     </swiper-slide>
-    <swiper-slide>
-      <h1>Slide 2</h1>
-      <img src="https://www.cnet.com/a/img/resize/b492180385d7c2e5b941261631753f1eb34da17e/hub/2021/08/20/453e37bf-61cb-4e16-ad90-fd822bdc390a/keychron-k3-mechanical-keyboard.jpg?auto=webp&fit=crop&height=675&width=1200">
-      <ion-icon name="desktop-outline"></ion-icon>
-      <p>Teclado Mecanico</p>
-    </swiper-slide>
-    <swiper-slide>
-      <h1>Slide 3</h1>
-      <ion-icon name="battery-charging-outline"></ion-icon>
-      <p>Swiper sin imagen :D</p>
-      <ion-button class="btn-volver"  (click)="finish()">Volver al HOME</ion-button>
+
+    <swiper-slide class="slide">
+      <h2>Comparte tus momentos</h2>
+      <img src="/assets/img/presentacion.avif" class="slide-img" />
+      <p>Publica fotos, historias y mantente en contacto</p>
+      <ion-button expand="full" (click)="finish()">Empezar</ion-button>
     </swiper-slide>
   </swiper-container>
 </ion-content>

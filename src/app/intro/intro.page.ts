@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 
 @Component({
@@ -10,15 +10,14 @@ import { Storage } from '@ionic/storage-angular';
 })
 export class IntroPage implements OnInit {
 
-  constructor(private router: Router, private storage: Storage) { }
+  constructor(private navCtrl: NavController, private storage: Storage) { }
 
   async ngOnInit() {
-    await this.storage.create();
+    await this.storage.set('viLaIntro', true);
   }
 
-  async finish() {
-    await this.storage.set('viLaIntro', true);
-    this.router.navigateByUrl('/menu/home');
+  finish() {
+    this.navCtrl.navigateRoot('/login');
   }
 
 }

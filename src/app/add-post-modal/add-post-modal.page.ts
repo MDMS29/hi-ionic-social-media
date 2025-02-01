@@ -4,7 +4,7 @@ import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PostService } from '../service/post.service';
 import { Storage } from '@ionic/storage-angular';
-import { ModalController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 
 defineCustomElements(window);
 
@@ -24,7 +24,8 @@ export class AddPostModalPage implements OnInit {
     private postService: PostService,
     private storage: Storage,
     private modalController: ModalController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -34,11 +35,40 @@ export class AddPostModalPage implements OnInit {
     });
   }
 
-  async uploadPhoto() {
+  async presentPhotoOptions() {
+    const alert = await this.alertController.create({
+      header: "Seleccione una opción",
+      message: "¿De dónde desea obtener la imagen?",
+      buttons: [
+        {
+          text: "Cámara",
+          handler: () => {
+            this.uploadPhoto(CameraSource.Camera);
+          }
+        },
+        {
+          text: "Galería",
+          handler: () => {
+            this.uploadPhoto(CameraSource.Photos);
+          }
+        },
+        {
+          text: "Cancelar",
+          role: "cancel",
+          handler: () => {
+            console.log('Cancelado');
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async uploadPhoto(source: CameraSource) {
     try {
       const photo = await Camera.getPhoto({
         resultType: CameraResultType.DataUrl,
-        source: CameraSource.Photos,
+        source: source,
         quality: 100
       });
 
@@ -53,6 +83,7 @@ export class AddPostModalPage implements OnInit {
   }
 
   async addPost() {
+
     if (this.addPostForm.invalid) {
       this.showToast('Completa todos los campos antes de publicar.');
       return;
@@ -74,7 +105,9 @@ export class AddPostModalPage implements OnInit {
 
       await this.postService.createPost(post_param);
       this.showToast('Post creado exitosamente 🎉');
-      this.modalController.dismiss(); // Cerrar modal después de publicar
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch (error) {
       console.error('Error al crear post:', error);
       this.showToast('Hubo un error al crear el post.');

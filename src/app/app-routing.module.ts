@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { LoginGuard } from './guard/login.guard';
+import { IntroGuard } from './guard/intro.guard';
 
 const routes: Routes = [
   {
@@ -14,11 +15,11 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule)
+    loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule), canActivate: [IntroGuard]
   },
   {
     path: 'register',
-    loadChildren: () => import('./register/register.module').then(m => m.RegisterPageModule)
+    loadChildren: () => import('./register/register.module').then(m => m.RegisterPageModule), canActivate: [IntroGuard]
   },
   {
     path: 'menu',
@@ -35,7 +36,8 @@ const routes: Routes = [
   {
     path: 'search-users',
     loadChildren: () => import('./search-users/search-users.module').then( m => m.SearchUsersPageModule)
-  },  {
+  },
+  {
     path: 'update-account-modal',
     loadChildren: () => import('./update-account-modal/update-account-modal.module').then( m => m.UpdateAccountModalPageModule)
   }
